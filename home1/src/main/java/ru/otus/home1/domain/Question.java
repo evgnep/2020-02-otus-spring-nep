@@ -16,6 +16,13 @@ public class Question {
     @Getter(AccessLevel.NONE)
     private final List<Choice> choices = new ArrayList<>();
 
+    public Question() {}
+
+    public Question(String text, String answer) {
+        setText(text);
+        setAnswer(answer);
+    }
+
     public void setAnswer(String text) {
         if (!choices.isEmpty())
             throw new UnsupportedOperationException("Это тест");
@@ -23,7 +30,7 @@ public class Question {
     }
 
     public String getAnswer() {
-        if (!choices.isEmpty())
+        if (isTest())
             throw new UnsupportedOperationException("Это тест");
         return choices.get(0).text;
     }
@@ -55,7 +62,7 @@ public class Question {
 
         // все ли верные варианты отмечены
         for (int no = 0, size = this.choices.size(); no < size; ++no)
-            if (answers.indexOf(no) == -1)
+            if (this.choices.get(no).valid && answers.indexOf(no) == -1)
                 return false;
 
         return true;
@@ -63,6 +70,7 @@ public class Question {
 
     @AllArgsConstructor
     @EqualsAndHashCode
+    @ToString
     private static class Choice {
         final String text;
         final boolean valid;

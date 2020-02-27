@@ -35,12 +35,13 @@ public class QuestionDaoCSV implements QuestionDao {
 
         var question = new Question();
         question.setText(record.get(0));
-        if (size < 3) {
+        if (size < 3 || record.get(2).isEmpty()) {
             question.setAnswer(record.get(1));
         }
         else {
-            for (int i = 2; i < size; i += 2)
+            for (int i = 2; i < size && !record.get(i).isEmpty(); i += 2) {
                 question.addChoice(record.get(i + 1), Boolean.parseBoolean(record.get(i)));
+            }
         }
 
         return question;
@@ -49,7 +50,7 @@ public class QuestionDaoCSV implements QuestionDao {
     public QuestionDaoCSV(String csvResourceName) throws IOException {
         try(var stream = getClass().getResourceAsStream(csvResourceName)) {
             boolean first = true;
-            for (var record : CSVFormat.DEFAULT.parse(new InputStreamReader(stream))) {
+            for (var record : CSVFormat.EXCEL.withDelimiter(';').parse(new InputStreamReader(stream, "windows-1251"))) {
                 if (first) {
                     first = false;
                 } else {
