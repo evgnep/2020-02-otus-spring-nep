@@ -1,17 +1,30 @@
 package ru.otus.home1.service;
 
+import lombok.AllArgsConstructor;
+import org.springframework.context.MessageSource;
+import org.springframework.stereotype.Service;
 import ru.otus.home1.domain.Answer;
 import ru.otus.home1.domain.Question;
 import ru.otus.home1.domain.Report;
 import ru.otus.home1.domain.User;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
+@Service
+@AllArgsConstructor
 public class ViewServiceConsole implements ViewService {
+    private final MessageSource messageSource;
+    private final Locale locale;
+
+    private String msg(String key, Object... args) {
+        return messageSource.getMessage(key, args, locale);
+    }
+
     @Override
     public User askUser() {
-        System.out.print("Укажите ваше имя: ");
+        System.out.print(msg("msg.enterName"));
         var name = System.console().readLine();
         System.out.println();
 
@@ -35,8 +48,7 @@ public class ViewServiceConsole implements ViewService {
 
             var choices = List.of(answer.split(",")).stream().map(a -> Integer.parseInt(a.strip()) - 1).collect(Collectors.toList());
             return new Answer(question, choices);
-        }
-        else {
+        } else {
             System.out.println("Введите ответ: ");
             var answer = System.console().readLine();
             System.out.println();

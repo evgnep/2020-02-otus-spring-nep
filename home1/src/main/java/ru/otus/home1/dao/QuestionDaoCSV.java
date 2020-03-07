@@ -2,11 +2,12 @@ package ru.otus.home1.dao;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Repository;
 import ru.otus.home1.domain.Question;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -27,6 +28,7 @@ import java.util.List;
  * Автор Java;Гослинг
  * private совместим с;;false;abstract;true;final;true;static
  */
+@Repository
 public class QuestionDaoCSV implements QuestionDao {
     private final List<Question> questions = new ArrayList<>();
 
@@ -47,8 +49,8 @@ public class QuestionDaoCSV implements QuestionDao {
         return question;
     }
 
-    public QuestionDaoCSV(String csvResourceName) throws IOException {
-        try(var stream = getClass().getResourceAsStream(csvResourceName)) {
+    public QuestionDaoCSV(@Value("${application.questions}") String csvResourceName) throws IOException {
+        try (var stream = getClass().getResourceAsStream(csvResourceName)) {
             boolean first = true;
             for (var record : CSVFormat.EXCEL.withDelimiter(';').parse(new InputStreamReader(stream, "windows-1251"))) {
                 if (first) {
