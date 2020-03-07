@@ -1,17 +1,16 @@
 package ru.otus.home1.service;
 
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import ru.otus.home1.dao.QuestionDao;
 import ru.otus.home1.domain.Answer;
 import ru.otus.home1.domain.Question;
 import ru.otus.home1.domain.Report;
 import ru.otus.home1.domain.User;
 
-import java.util.*;
+import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
@@ -25,7 +24,7 @@ public class RunnerServiceImplTest {
     Question q2;
     User user = new User("Ivan", "Ivanov");
 
-    @Before
+    @BeforeEach
     public void before() {
         q2 = new Question();
         q2.setText("q2");

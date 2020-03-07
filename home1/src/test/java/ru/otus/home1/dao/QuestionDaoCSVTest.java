@@ -1,6 +1,6 @@
 package ru.otus.home1.dao;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import ru.otus.home1.domain.Question;
 
 import java.io.IOException;
