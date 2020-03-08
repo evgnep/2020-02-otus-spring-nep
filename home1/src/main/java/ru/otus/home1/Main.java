@@ -25,7 +25,7 @@ public class Main {
     @Bean
     public MessageSource messageSource() {
         var ms = new ResourceBundleMessageSource();
-        ms.setBasename("/messages");
+        ms.setBasename("messages");
         ms.setDefaultEncoding("UTF-8");
         return ms;
     }

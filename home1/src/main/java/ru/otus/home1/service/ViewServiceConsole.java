@@ -28,7 +28,7 @@ public class ViewServiceConsole implements ViewService {
         var name = System.console().readLine();
         System.out.println();
 
-        System.out.print("Укажите вашу фамилию: ");
+        System.out.print(msg("msg.enterSurname"));
         var surname = System.console().readLine();
         System.out.println();
 
@@ -42,14 +42,14 @@ public class ViewServiceConsole implements ViewService {
             for (int i = 0; i < question.getChoicesSize(); ++i) {
                 System.out.println(i + 1 + ": " + question.getChoice(i));
             }
-            System.out.println("Введите номера верных вариантов через запятую: ");
+            System.out.println(msg("msg.enterTest"));
             var answer = System.console().readLine();
             System.out.println();
 
             var choices = List.of(answer.split(",")).stream().map(a -> Integer.parseInt(a.strip()) - 1).collect(Collectors.toList());
             return new Answer(question, choices);
         } else {
-            System.out.println("Введите ответ: ");
+            System.out.println(msg("msg.enterAnswer"));
             var answer = System.console().readLine();
             System.out.println();
 
@@ -59,7 +59,7 @@ public class ViewServiceConsole implements ViewService {
 
     @Override
     public void showReport(Report report) {
-        System.out.println("Тест завершен");
-        System.out.println("Процент правильных ответов: " + report.score());
+        System.out.println(msg("msg.testComplete"));
+        System.out.println(msg("msg.testResult", report.score()));
     }
 }
