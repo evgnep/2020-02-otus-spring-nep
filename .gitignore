@@ -7,3 +7,5 @@
 gradlew
 gradlew.bat
 */gradle/wrapper/*
+/.gradle/
+/.idea/

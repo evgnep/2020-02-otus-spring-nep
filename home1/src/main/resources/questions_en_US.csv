@@ -1,0 +1,6 @@
+Вопрос;Ответ;Вариант верен;Вариант;;;;
+private final void x();;false;Compile error;true;Ok;;
+Java author;Gosling;;;;;;
+2+2;;true;b11;false;3;true;4
+Wad and;Peace;;;;;;
+"int a = 1; int  b = a = 2";;true;"a=2; b = 2";false;"a = 1; b = 2";false;Compile error

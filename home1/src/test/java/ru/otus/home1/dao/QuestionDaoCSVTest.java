@@ -1,6 +1,6 @@
 package ru.otus.home1.dao;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import ru.otus.home1.domain.Question;
 
 import java.io.IOException;
@@ -18,7 +18,7 @@ public class QuestionDaoCSVTest {
         q2.addChoice("3", false);
         q2.addChoice("4", true);
 
-        var questions = new QuestionDaoCSV("/test.csv");
+        var questions = new QuestionDaoCSV("/test", null);
         assertThat(questions.getQuestions())
                 .containsExactly(q1, q2);
     }

@@ -1,10 +1,11 @@
 package ru.otus.home1.domain;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class QuestionTest {
     @Test
@@ -27,7 +28,7 @@ public class QuestionTest {
         q.addChoice("b10", true);
 
         assertThat(q.isTest()).isTrue();
-        assertThatThrownBy(() -> q.getAnswer()).isInstanceOf(UnsupportedOperationException.class);
+        assertThatThrownBy(q::getAnswer).isInstanceOf(UnsupportedOperationException.class);
         assertThat(q.isValidAnswers(List.of(1, 2))).isTrue();
         assertThat(q.isValidAnswers(List.of(0, 1, 2))).isFalse();
         assertThat(q.isValidAnswers(List.of(2))).isFalse();
