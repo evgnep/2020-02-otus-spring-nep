@@ -1,16 +1,12 @@
 package ru.otus.home1;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.MessageSource;
-import org.springframework.context.annotation.*;
-import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import ru.otus.home1.service.RunnerService;
 
-import java.util.Locale;
-
-@ComponentScan
-@Configuration
-@PropertySource("classpath:application.properties")
+@SpringBootApplication
+@EnableConfigurationProperties
 public class Main {
     public static void main(String[] args) {
         try (var context = new AnnotationConfigApplicationContext()) {
@@ -22,16 +18,11 @@ public class Main {
         }
     }
 
-    @Bean
-    public MessageSource messageSource() {
-        var ms = new ResourceBundleMessageSource();
-        ms.setBasename("messages");
-        ms.setDefaultEncoding("UTF-8");
-        return ms;
-    }
-
-    @Bean
-    public Locale locale(@Value("${application.locale}") Locale locale) {
-        return locale;
-    }
+//    @Bean
+//    public MessageSource messageSource() {
+//        var ms = new ResourceBundleMessageSource();
+//        ms.setBasename("messages");
+//        ms.setDefaultEncoding("UTF-8");
+//        return ms;
+//    }
 }
