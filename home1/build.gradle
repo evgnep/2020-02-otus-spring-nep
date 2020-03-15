@@ -14,8 +14,18 @@ repositories {
     mavenCentral()
 }
 
+jar {
+    enabled=true
+}
+
 application {
     mainClassName = 'ru.otus.home1.Main'
+}
+
+processResources {
+    filesMatching('application.yml') {
+        expand(project.properties)
+    }
 }
 
 test {
