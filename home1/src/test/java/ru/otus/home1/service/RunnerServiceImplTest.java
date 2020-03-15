@@ -2,6 +2,10 @@ package ru.otus.home1.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import ru.otus.home1.dao.QuestionDao;
 import ru.otus.home1.domain.Answer;
 import ru.otus.home1.domain.Question;
@@ -14,11 +18,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 public class RunnerServiceImplTest {
-    QuestionDao questionDao = mock(QuestionDao.class);
-    ViewService viewService = mock(ViewService.class);
+    @Mock
+    QuestionDao questionDao;
+    @Mock
+    ViewService viewService;
 
-    RunnerService runnerService = new RunnerServiceImpl(viewService, questionDao);
+    @InjectMocks
+    RunnerServiceImpl runnerService;
 
     Question q1 = new Question("q1", "1");
     Question q2;
