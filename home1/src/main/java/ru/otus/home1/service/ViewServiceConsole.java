@@ -9,6 +9,7 @@ import ru.otus.home1.domain.Report;
 import ru.otus.home1.domain.User;
 
 import java.io.PrintStream;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -28,6 +29,8 @@ public class ViewServiceConsole implements ViewService {
     }
 
     private String msg(String key, Object... args) {
+        if (properties.getDefaultLocale() == null)
+            return key + Arrays.toString(args);
         return messageSource.getMessage(key, args, properties.getDefaultLocale());
     }
 
