@@ -9,3 +9,4 @@ gradlew.bat
 */gradle/wrapper/*
 /.gradle/
 /.idea/
+/gradle/wrapper/
