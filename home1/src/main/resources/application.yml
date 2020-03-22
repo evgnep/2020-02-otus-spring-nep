@@ -1,0 +1,4 @@
+application:
+  version: ${project.version}
+  questions: /questions
+  locale: ru_RU
