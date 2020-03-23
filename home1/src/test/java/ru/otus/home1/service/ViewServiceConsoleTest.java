@@ -2,6 +2,7 @@ package ru.otus.home1.service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -15,7 +16,12 @@ import java.util.Locale;
 
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
+/**
+ * На данный момент реализован тест только одного метода askUser() с целью освоения интеграционных тестов
+ * и подмены потоков
+ */
 @SpringBootTest
 class ViewServiceConsoleTest {
     @Autowired
@@ -29,14 +35,8 @@ class ViewServiceConsoleTest {
 
         var user = service.askUser();
         then(user).isEqualTo(new User("Ivan", "Petrov"));
-    }
-
-    @Test
-    void askQuestion() {
-    }
-
-    @Test
-    void showReport() {
+        verify(properties.getOutputStream()).print("Enter your name: ");
+        verify(properties.getOutputStream()).print("Enter your surname: ");
     }
 
     private static class StubInputStream extends ByteArrayInputStream {
@@ -64,6 +64,7 @@ class ViewServiceConsoleTest {
     }
 
     @Configuration
+    @EnableAutoConfiguration
     @Import({ViewServiceConsole.class, StubProperties.class})
     static class Config {
     }
