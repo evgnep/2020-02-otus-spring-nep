@@ -25,6 +25,7 @@ test {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.shell:spring-shell-starter:2.0.1.RELEASE'
 
     implementation group: 'org.apache.commons', name: 'commons-csv', version: '1.8'
 
