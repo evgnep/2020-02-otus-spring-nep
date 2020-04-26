@@ -9,3 +9,6 @@ gradlew.bat
 */gradle/wrapper/*
 /.gradle/
 /.idea/
+/gradle/wrapper/
+/spring-shell.log
+/home7/spring-shell.log
