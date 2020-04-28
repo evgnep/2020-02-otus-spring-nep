@@ -5,7 +5,10 @@ import org.springframework.shell.standard.ShellMethod;
 import ru.otus.home7.dao.Crud;
 import ru.otus.home7.domain.Author;
 
+import javax.transaction.Transactional;
+
 @ShellComponent
+@Transactional
 public class AuthorShell extends AbstractCrudShell<Author> {
     public AuthorShell(Crud<Author> crud) {
         super(crud);
@@ -38,7 +41,7 @@ public class AuthorShell extends AbstractCrudShell<Author> {
 
     @ShellMethod(value = "Изменение автора")
     public String modifyAuthor(int id, String name) {
-        return update(Author.builder().id(id).name(name).build());
+        return update(id, a -> a.setName(name));
     }
 
 }

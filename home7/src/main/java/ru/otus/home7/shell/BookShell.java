@@ -62,8 +62,7 @@ public class BookShell extends AbstractCrudShell<Book> {
                              @ShellOption(defaultValue = ShellOption.NULL) String description,
                              @ShellOption(defaultValue = ShellOption.NULL) String authorName,
                              @ShellOption(defaultValue = ShellOption.NULL) String genreName) {
-        var book = crud.readById(id);
-        return update(updateBook(book, name, description, authorName, genreName));
+        return update(id, b -> updateBook(b, name, description, authorName, genreName));
     }
 
 }

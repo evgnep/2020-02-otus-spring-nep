@@ -2,9 +2,10 @@ package ru.otus.home7.shell;
 
 import ru.otus.home7.dao.Crud;
 
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-public abstract class AbstractCrudShell<T> {
+abstract class AbstractCrudShell<T> {
     protected final Crud<T> crud;
 
     public AbstractCrudShell(Crud<T> crud) {
@@ -33,8 +34,10 @@ public abstract class AbstractCrudShell<T> {
         return "created: " + elem;
     }
 
-    public String update(T elem) {
-        crud.update(elem);
+    public String update(long id, Consumer<T> updater) {
+        var elem = crud.readById(id);
+        updater.accept(elem);
+        crud.flush();
         return "updated: " + elem;
     }
 }

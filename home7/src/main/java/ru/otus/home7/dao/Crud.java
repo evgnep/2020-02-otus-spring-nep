@@ -7,11 +7,11 @@ public interface Crud<T> {
 
     void create(T elem);
 
-    void update(T elem);
-
     void delete(long id);
 
     T readById(long id);
 
     List<T> readAll();
+
+    void flush();
 }
