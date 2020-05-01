@@ -5,10 +5,12 @@ import ru.otus.home7.domain.Genre;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
-public class GenreDaoJdbc implements GenreDao {
+@Transactional
+class GenreDaoImpl implements GenreDao {
     @PersistenceContext
     private EntityManager em;
 
@@ -25,8 +27,12 @@ public class GenreDaoJdbc implements GenreDao {
     }
 
     @Override
-    public void create(Genre elem) {
-        em.persist(elem);
+    public Genre save(Genre elem) {
+        if (elem.getId() == 0)
+            em.persist(elem);
+        else
+            elem = em.merge(elem);
+        return elem;
     }
 
     @Override

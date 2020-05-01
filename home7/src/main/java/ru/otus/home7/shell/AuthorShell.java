@@ -2,7 +2,7 @@ package ru.otus.home7.shell;
 
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
-import ru.otus.home7.dao.Crud;
+import ru.otus.home7.dao.Dao;
 import ru.otus.home7.domain.Author;
 
 import javax.transaction.Transactional;
@@ -10,7 +10,7 @@ import javax.transaction.Transactional;
 @ShellComponent
 @Transactional
 public class AuthorShell extends AbstractCrudShell<Author> {
-    public AuthorShell(Crud<Author> crud) {
+    public AuthorShell(Dao<Author> crud) {
         super(crud);
     }
 

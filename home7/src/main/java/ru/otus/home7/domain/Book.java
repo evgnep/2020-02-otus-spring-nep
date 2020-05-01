@@ -17,14 +17,18 @@ public class Book {
     @Id
     @Column(name = "id")
     private long id;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "description")
     private String description;
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+
+    @ManyToOne(optional = false)
     @JoinColumn(name = "author")
     private Author author;
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+
+    @ManyToOne(optional = false)
     @JoinColumn(name = "genre")
     private Genre genre;
 }

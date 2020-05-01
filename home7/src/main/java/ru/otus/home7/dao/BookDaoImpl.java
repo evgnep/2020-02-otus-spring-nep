@@ -5,10 +5,12 @@ import ru.otus.home7.domain.Book;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
-public class BookDaoJdbc implements Crud<Book> {
+@Transactional
+class BookDaoImpl implements Dao<Book> {
     @PersistenceContext
     private EntityManager em;
 
@@ -18,8 +20,12 @@ public class BookDaoJdbc implements Crud<Book> {
     }
 
     @Override
-    public void create(Book elem) {
-        em.persist(elem);
+    public Book save(Book elem) {
+        if (elem.getId() == 0)
+            em.persist(elem);
+        else
+            elem = em.merge(elem);
+        return elem;
     }
 
     @Override

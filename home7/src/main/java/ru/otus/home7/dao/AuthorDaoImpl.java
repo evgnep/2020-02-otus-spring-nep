@@ -5,10 +5,12 @@ import ru.otus.home7.domain.Author;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
-public class AuthorDaoJdbc implements AuthorDao {
+@Transactional
+class AuthorDaoImpl implements AuthorDao {
     @PersistenceContext
     private EntityManager em;
 
@@ -25,8 +27,12 @@ public class AuthorDaoJdbc implements AuthorDao {
     }
 
     @Override
-    public void create(Author elem) {
-        em.persist(elem);
+    public Author save(Author elem) {
+        if (elem.getId() == 0)
+            em.persist(elem);
+        else
+            elem = em.merge(elem);
+        return elem;
     }
 
     @Override

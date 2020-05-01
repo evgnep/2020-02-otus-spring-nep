@@ -20,6 +20,7 @@ public class Genre {
     @Id
     @Column(name = "id")
     private long id;
+
     @Column(name = "name")
     private String name;
 }

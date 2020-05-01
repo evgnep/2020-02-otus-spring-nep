@@ -1,14 +1,14 @@
 package ru.otus.home7.shell;
 
-import ru.otus.home7.dao.Crud;
+import ru.otus.home7.dao.Dao;
 
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 abstract class AbstractCrudShell<T> {
-    protected final Crud<T> crud;
+    protected final Dao<T> crud;
 
-    public AbstractCrudShell(Crud<T> crud) {
+    public AbstractCrudShell(Dao<T> crud) {
         this.crud = crud;
     }
 
@@ -30,7 +30,7 @@ abstract class AbstractCrudShell<T> {
     }
 
     public String create(T elem) {
-        crud.create(elem);
+        crud.save(elem);
         return "created: " + elem;
     }
 

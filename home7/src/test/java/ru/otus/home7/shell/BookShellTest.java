@@ -3,8 +3,9 @@ package ru.otus.home7.shell;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.home7.dao.Crud;
+import ru.otus.home7.dao.Dao;
 import ru.otus.home7.domain.Author;
 import ru.otus.home7.domain.Book;
 import ru.otus.home7.domain.Genre;
@@ -13,19 +14,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Transactional
+@Sql("classpath:data-test.sql")
 class BookShellTest {
 
     @Autowired
     BookShell shell;
 
     @Autowired
-    Crud<Book> bookDao;
+    Dao<Book> bookDao;
 
     @Autowired
-    Crud<Author> authorDao;
+    Dao<Author> authorDao;
 
     @Autowired
-    Crud<Genre> genreDao;
+    Dao<Genre> genreDao;
 
     @Test
     void readAllBooks() {
@@ -64,8 +66,8 @@ class BookShellTest {
     void modifyBook() {
         var author2 = Author.builder().id(2).name("w").build();
         var genre2 = Genre.builder().id(2).name("x").build();
-        authorDao.create(author2);
-        genreDao.create(genre2);
+        authorDao.save(author2);
+        genreDao.save(genre2);
         var book = bookDao.readById(1);
 
         shell.modifyBook(1, null, null, author2.getName(), null);

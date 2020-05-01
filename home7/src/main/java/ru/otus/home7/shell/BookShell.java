@@ -4,7 +4,7 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import ru.otus.home7.dao.AuthorDao;
-import ru.otus.home7.dao.Crud;
+import ru.otus.home7.dao.Dao;
 import ru.otus.home7.dao.GenreDao;
 import ru.otus.home7.domain.Book;
 
@@ -13,7 +13,7 @@ public class BookShell extends AbstractCrudShell<Book> {
     private final AuthorDao authorDao;
     private final GenreDao genreDao;
 
-    public BookShell(Crud<Book> crud, AuthorDao authorDao, GenreDao genreDao) {
+    public BookShell(Dao<Book> crud, AuthorDao authorDao, GenreDao genreDao) {
         super(crud);
         this.authorDao = authorDao;
         this.genreDao = genreDao;
