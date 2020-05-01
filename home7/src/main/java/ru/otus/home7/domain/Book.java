@@ -1,11 +1,10 @@
 package ru.otus.home7.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Builder
@@ -14,9 +13,11 @@ import javax.persistence.*;
 @Entity
 @Table(name = "book")
 public class Book {
-    @Id
-    @Column(name = "id")
-    private long id;
+    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @JoinColumn(name = "book", nullable = false)
+    @Setter(AccessLevel.NONE)
+    @EqualsAndHashCode.Exclude
+    private final List<BookComment> comments = new ArrayList<>();
 
     @Column(name = "name")
     private String name;
@@ -31,4 +32,8 @@ public class Book {
     @ManyToOne(optional = false)
     @JoinColumn(name = "genre")
     private Genre genre;
+    @Id
+    @Column(name = "id")
+    @GeneratedValue
+    private long id;
 }

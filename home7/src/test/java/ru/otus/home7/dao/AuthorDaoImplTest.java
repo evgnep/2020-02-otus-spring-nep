@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.context.jdbc.Sql;
 import ru.otus.home7.domain.Author;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -14,7 +13,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 @Import(AuthorDaoImpl.class)
 @DisplayName("Dao авторов")
-@Sql("classpath:data-test.sql")
 class AuthorDaoImplTest {
 
     @Autowired
@@ -29,10 +27,10 @@ class AuthorDaoImplTest {
     @Test
     @DisplayName("можно создать нового")
     void create() {
-        Author author = Author.builder().id(2).name("x").build();
+        Author author = Author.builder().name("x").build();
         dao.save(author);
         assertThat(dao.count()).isEqualTo(2);
-        assertThat(dao.readById(2)).isEqualTo(author);
+        assertThat(dao.readById(author.getId())).isEqualTo(author);
     }
 
     @Test
@@ -55,7 +53,7 @@ class AuthorDaoImplTest {
     @Test
     @DisplayName("можно прочитать все")
     void readAll() {
-        Author author = Author.builder().id(2).name("x").build();
+        Author author = Author.builder().name("x").build();
         dao.save(author);
         var all = dao.readAll();
         assertThat(all).hasSize(2).contains(author);

@@ -7,18 +7,21 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
-@Table(name = "genre")
-public class Genre {
+@Table(name = "book_comment")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+public class BookComment {
     @Id
     @Column(name = "id")
     @GeneratedValue
-    private long id;
+    long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "author")
+    String author;
+
+    @Column(name = "comment")
+    String comment;
 }
