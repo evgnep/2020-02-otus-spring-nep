@@ -1,6 +1,7 @@
 package ru.otus.home7.shell;
 
-import ru.otus.home7.dao.Dao;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -9,42 +10,42 @@ import java.util.stream.Collectors;
  * Вспомогательный класс для реализации crud-подобных комбинаций методов
  */
 class CrudShellImpl<T> {
-    private final Dao<T> dao;
+    private final JpaRepository<T, Long> repository;
 
-    public CrudShellImpl(Dao<T> dao) {
-        this.dao = dao;
+    public CrudShellImpl(JpaRepository<T, Long> repository) {
+        this.repository = repository;
     }
 
-    public Dao<T> getDao() {
-        return dao;
+    public CrudRepository<T, Long> getRepository() {
+        return repository;
     }
 
     public String readAll() {
-        return dao.readAll().stream().map(Object::toString).collect(Collectors.joining("\n"));
+        return repository.findAll().stream().map(Object::toString).collect(Collectors.joining("\n"));
     }
 
-    public String readById(int id) {
-        return dao.readById(id).toString();
+    public String readById(long id) {
+        return repository.findById(id).toString();
     }
 
     public String count() {
-        return Long.toString(dao.count());
+        return Long.toString(repository.count());
     }
 
-    public String delete(int id) {
-        dao.delete(id);
+    public String delete(long id) {
+        repository.deleteById(id);
         return "deleted";
     }
 
     public String create(T elem) {
-        dao.save(elem);
+        repository.save(elem);
         return "created: " + elem;
     }
 
     public String update(long id, Consumer<T> updater) {
-        var elem = dao.readById(id);
+        var elem = repository.findById(id).orElseThrow();
         updater.accept(elem);
-        dao.flush();
+        repository.flush();
         return "updated: " + elem;
     }
 }
