@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.home7.dao.Crud;
+import ru.otus.home7.dao.Dao;
 import ru.otus.home7.domain.Author;
 import ru.otus.home7.domain.Book;
 import ru.otus.home7.domain.Genre;
@@ -19,13 +19,13 @@ class BookShellTest {
     BookShell shell;
 
     @Autowired
-    Crud<Book> bookDao;
+    Dao<Book> bookDao;
 
     @Autowired
-    Crud<Author> authorDao;
+    Dao<Author> authorDao;
 
     @Autowired
-    Crud<Genre> genreDao;
+    Dao<Genre> genreDao;
 
     @Test
     void readAllBooks() {
@@ -54,18 +54,18 @@ class BookShellTest {
     void createBook() {
         var author1 = authorDao.readById(1);
         var genre1 = genreDao.readById(1);
-        shell.createBook(2, "asd", "---", author1.getName(), genre1.getName());
+        shell.createBook("asd", "---", author1.getName(), genre1.getName());
 
-        var book = bookDao.readById(2);
-        assertThat(book).isEqualTo(Book.builder().id(2).name("asd").description("---").author(author1).genre(genre1).build());
+        var book = bookDao.readAll().get(1);
+        assertThat(book).isEqualTo(Book.builder().id(book.getId()).name("asd").description("---").author(author1).genre(genre1).build());
     }
 
     @Test
     void modifyBook() {
-        var author2 = Author.builder().id(2).name("w").build();
-        var genre2 = Genre.builder().id(2).name("x").build();
-        authorDao.create(author2);
-        genreDao.create(genre2);
+        var author2 = Author.builder().name("w").build();
+        var genre2 = Genre.builder().name("x").build();
+        authorDao.save(author2);
+        genreDao.save(genre2);
         var book = bookDao.readById(1);
 
         shell.modifyBook(1, null, null, author2.getName(), null);
@@ -77,5 +77,16 @@ class BookShellTest {
         book.setDescription("===");
         book.setGenre(genre2);
         assertThat(bookDao.readById(1)).isEqualTo(book);
+    }
+
+    @Test
+    void addComment() {
+        var book = bookDao.readById(1);
+        book.getComments().clear();
+
+        shell.myName("test");
+        shell.addComment(1, "comment");
+
+        assertThat(book.getComments()).hasSize(1).allMatch(c -> c.getAuthor().equals("test") && c.getComment().equals("comment"));
     }
 }

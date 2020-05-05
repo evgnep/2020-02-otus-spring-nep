@@ -16,3 +16,9 @@
 Таблица genre
 * id
 * name
+
+Таблица book_comment
+* id
+* author (автор комментария, просто текст)
+* comment
+* book (ссылка на книгу)

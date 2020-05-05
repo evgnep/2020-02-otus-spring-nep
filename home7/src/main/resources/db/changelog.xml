@@ -1,0 +1,68 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="evgnep" id="001-init">
+        <createTable tableName="author">
+            <column name="id" type="long">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(200)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="genre">
+            <column name="id" type="long">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(200)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="book">
+            <column name="id" type="long">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(1000)"/>
+            <column name="author" type="long">
+                <constraints nullable="false"/>
+            </column>
+            <column name="genre" type="long">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="book_comment">
+            <column name="id" type="long">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="author" type="varchar(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="comment" type="varchar(1000)"/>
+            <column name="book" type="long">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="book" baseColumnNames="author" constraintName="book_author"
+                                 referencedTableName="author" referencedColumnNames="id"
+                                 onDelete="CASCADE" onUpdate="RESTRICT"/>
+        <addForeignKeyConstraint baseTableName="book" baseColumnNames="genre" constraintName="book_genre"
+                                 referencedTableName="genre" referencedColumnNames="id"
+                                 onDelete="CASCADE" onUpdate="RESTRICT"/>
+        <addForeignKeyConstraint baseTableName="book_comment" baseColumnNames="book" constraintName="comment_book"
+                                 referencedTableName="book" referencedColumnNames="id"
+                                 onDelete="CASCADE" onUpdate="RESTRICT"/>
+        <createSequence sequenceName="HIBERNATE_SEQUENCE" startValue="100"/>
+    </changeSet>
+
+    <changeSet author="evgnep" id="002-data">
+        <sqlFile path="data.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+
+</databaseChangeLog>
