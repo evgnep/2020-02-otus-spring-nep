@@ -14,7 +14,7 @@ import java.util.List;
 @Table(name = "book")
 public class Book {
     @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
-    @JoinColumn(name = "book", nullable = false)
+    @JoinColumn(name = "book_id", nullable = false)
     @Setter(AccessLevel.NONE)
     @EqualsAndHashCode.Exclude
     private final List<BookComment> comments = new ArrayList<>();
@@ -26,11 +26,11 @@ public class Book {
     private String description;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "author")
+    @JoinColumn(name = "author_id")
     private Author author;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "genre")
+    @JoinColumn(name = "genre_id")
     private Genre genre;
     @Id
     @Column(name = "id")
