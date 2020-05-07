@@ -24,7 +24,6 @@ dependencies {
     implementation 'org.springframework.shell:spring-shell-starter:2.0.1.RELEASE'
 
     implementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
-    implementation 'com.github.mongobee:mongobee:0.13'
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
