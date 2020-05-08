@@ -2,8 +2,8 @@ package ru.otus.home7.shell;
 
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
-import ru.otus.home7.dao.Dao;
 import ru.otus.home7.domain.Author;
+import ru.otus.home7.repository.AuthorRepository;
 
 import javax.transaction.Transactional;
 
@@ -12,8 +12,8 @@ import javax.transaction.Transactional;
 class AuthorShell {
     private final CrudShellImpl<Author> impl;
 
-    public AuthorShell(Dao<Author> dao) {
-        impl = new CrudShellImpl<>(dao);
+    public AuthorShell(AuthorRepository repository) {
+        impl = new CrudShellImpl<>(repository);
     }
 
     @ShellMethod(value = "Чтение всех авторов")

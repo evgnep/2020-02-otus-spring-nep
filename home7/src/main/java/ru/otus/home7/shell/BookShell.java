@@ -5,24 +5,24 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.home7.dao.AuthorDao;
-import ru.otus.home7.dao.Dao;
-import ru.otus.home7.dao.GenreDao;
 import ru.otus.home7.domain.Book;
 import ru.otus.home7.domain.BookComment;
+import ru.otus.home7.repository.AuthorRepository;
+import ru.otus.home7.repository.BookRepository;
+import ru.otus.home7.repository.GenreRepository;
 
 @ShellComponent
 @Transactional
 class BookShell {
     private final CrudShellImpl<Book> impl;
-    private final AuthorDao authorDao;
-    private final GenreDao genreDao;
+    private final AuthorRepository authorRepository;
+    private final GenreRepository genreRepository;
     private String commentAuthor;
 
-    public BookShell(Dao<Book> dao, AuthorDao authorDao, GenreDao genreDao) {
-        impl = new CrudShellImpl<>(dao);
-        this.authorDao = authorDao;
-        this.genreDao = genreDao;
+    public BookShell(BookRepository bookRepository, AuthorRepository authorRepository, GenreRepository genreRepository) {
+        impl = new CrudShellImpl<>(bookRepository);
+        this.authorRepository = authorRepository;
+        this.genreRepository = genreRepository;
     }
 
     @ShellMethod(value = "Как ваше имя?")
@@ -37,7 +37,7 @@ class BookShell {
     }
 
     @ShellMethod(value = "Чтение книги по ID")
-    public String readBookById(int id) {
+    public String readBookById(long id) {
         return impl.readById(id);
     }
 
@@ -57,9 +57,9 @@ class BookShell {
         if (description != null)
             book.setDescription(description);
         if (authorName != null)
-            book.setAuthor(authorDao.readByName(authorName));
+            book.setAuthor(authorRepository.findByName(authorName));
         if (genreName != null)
-            book.setGenre(genreDao.readByName(genreName));
+            book.setGenre(genreRepository.findByName(genreName));
         return book;
     }
 
@@ -78,11 +78,10 @@ class BookShell {
     }
 
     @ShellMethod(value = "Добавить комментарий")
-    public String addComment(int bookId, String comment) {
-        var book = impl.getDao().readById(bookId);
+    public String addComment(long bookId, String comment) {
+        var book = impl.getRepository().findById(bookId).orElseThrow();
         var commentObj = BookComment.builder().comment(comment).author(commentAuthor).build();
         book.getComments().add(commentObj);
-        impl.getDao().flush();
         return commentObj.toString();
     }
 
