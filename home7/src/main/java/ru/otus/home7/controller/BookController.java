@@ -1,5 +1,6 @@
 package ru.otus.home7.controller;
 
+import lombok.Data;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -7,8 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import ru.otus.home7.domain.Author;
 import ru.otus.home7.domain.Book;
 import ru.otus.home7.domain.BookComment;
+import ru.otus.home7.domain.Genre;
 import ru.otus.home7.repository.AuthorRepository;
 import ru.otus.home7.repository.BookRepository;
 import ru.otus.home7.repository.GenreRepository;
@@ -78,8 +81,22 @@ public class BookController {
 
     @PostMapping("/book/save")
     @Transactional
-    public ModelAndView save(Book book, Model model) {
+    public ModelAndView save(BookToSave bookToSave) {
+        var book = bookToSave.id == 0 ? new Book() : bookRepository.findById(bookToSave.id).orElseThrow();
+        book.setName(bookToSave.name);
+        book.setDescription(bookToSave.description);
+        book.setAuthor(Author.builder().id(bookToSave.author).build());
+        book.setGenre(Genre.builder().id(bookToSave.genre).build());
         bookRepository.save(book);
         return new ModelAndView("redirect:/books");
+    }
+
+    @Data
+    public static class BookToSave {
+        long id;
+        String name,
+                description;
+        long author,
+                genre;
     }
 }

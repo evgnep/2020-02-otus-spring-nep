@@ -115,8 +115,8 @@ class BookControllerTest {
     }
 
     @Test
-    @DisplayName("сохранить книгу")
-    void save() throws Exception {
+    @DisplayName("сохранить изменения в существующей книге")
+    void saveModify() throws Exception {
         var book2 = Book.builder().id(book.getId()).name("b2").description("d2")
                 .author(Author.builder().id(author2.getId()).build())
                 .genre(Genre.builder().id(genre2.getId()).build())
@@ -124,7 +124,27 @@ class BookControllerTest {
         book2.getComments().addAll(book.getComments());
 
         mvc.perform(post("/book/save")
-                .param("id", Long.toString(book.getId()))
+                .param("id", Long.toString(book2.getId()))
+                .param("name", book2.getName())
+                .param("description", book2.getDescription())
+                .param("author", Long.toString(book2.getAuthor().getId()))
+                .param("genre", Long.toString(book2.getGenre().getId())))
+                .andDo(print())
+                .andExpect(redirectedUrl("/books"));
+
+        verify(bookRepository).save(book2);
+    }
+
+    @Test
+    @DisplayName("создать новую книгу")
+    void saveNew() throws Exception {
+        var book2 = Book.builder().id(0).name("b2").description("d2")
+                .author(Author.builder().id(author2.getId()).build())
+                .genre(Genre.builder().id(genre2.getId()).build())
+                .build();
+
+        mvc.perform(post("/book/save")
+                .param("id", Long.toString(book2.getId()))
                 .param("name", book2.getName())
                 .param("description", book2.getDescription())
                 .param("author", Long.toString(book2.getAuthor().getId()))
