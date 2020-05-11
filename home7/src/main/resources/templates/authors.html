@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Все авторы</title>
+    <!--/*/ <th:block th:include="fragments :: header">
+       </th:block> /*/-->
+</head>
+<body>
+
+<div th:insert="fragments :: menu"/>
+
+<h1>Авторы:</h1>
+
+<table class="mytable" th:if="${authors.size()>0}">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Имя</th>
+        <th>Действие</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="author : ${authors}">
+        <td th:text="${author.id}">1</td>
+        <td th:text="${author.name}">John Doe</td>
+        <td>
+            <a href="edit.html" th:href="@{/author/edit(id=${author.id})}">Изменить</a>
+            <a href="delete.html" th:href="@{/author/delete(id=${author.id})}">Удалить</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="authors" th:if="${authors.size()==0}">
+    Нет авторов! Создайте одного
+</div>
+
+<div>
+    <a href="create.html" th:href="@{/author/create}">Создать</a>
+</div>
+
+</body>
+</html>

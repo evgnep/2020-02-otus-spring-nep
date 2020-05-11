@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Все книги</title>
+    <!--/*/ <th:block th:include="fragments :: header">
+        </th:block> /*/-->
+</head>
+<body>
+<div th:insert="fragments :: menu"/>
+
+<h1>Книги:</h1>
+
+<table class="mytable" th:if="${books.size()>0}">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Книга</th>
+        <th>Автор</th>
+        <th>Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="book : ${books}">
+        <td th:text="${book.id}">1</td>
+        <td th:text="${book.name}">Some book</td>
+        <td th:text="${book.author.name}">John Doe</td>
+        <td>
+            <a href="edit.html" th:href="@{/book/info(id=${book.id})}">Детали</a>
+            <a href="edit.html" th:href="@{/book/edit(id=${book.id})}">Изменить</a>
+            <a href="delete.html" th:href="@{/book/delete(id=${book.id})}">Удалить</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="authors" th:if="${books.size()==0}">
+    Нет книг! Создайте одну
+</div>
+
+<div>
+    <a href="create.html" th:href="@{/book/create}">Создать</a>
+</div>
+
+</body>
+</html>

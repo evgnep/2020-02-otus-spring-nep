@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Изменение книги</title>
+    <!--/*/ <th:block th:include="fragments :: header">
+   </th:block> /*/-->
+</head>
+<body>
+
+<div th:insert="fragments :: menu"/>
+
+<form action="edit.html" id="edit-form" th:action="@{/book/save}" th:method="post">
+    <h1>Книга:</h1>
+
+    <div class="row">
+        <label for="id-input">ID:</label>
+        <input id="id-input" name="id" readonly="readonly" th:value="${book.id}" type="text" value="1"/>
+    </div>
+
+    <div class="row">
+        <label for="name-input">Название:</label>
+        <input id="name-input" name="name" th:value="${book.name}" type="text" value="Some book"/>
+    </div>
+
+    <div class="row">
+        <label for="author-input">Автор:</label>
+        <select id="author-input" name="author">
+            <option th:each="author : ${authors}" th:selected="${book.author?.id == author.id}"
+                    th:text="${author.name}" th:value="${author.id}"></option>
+        </select>
+    </div>
+
+    <div class="row">
+        <label for="genre-input">Автор:</label>
+        <select id="genre-input" name="genre">
+            <option th:each="genre : ${genres}" th:selected="${book.genre?.id == genre.id}"
+                    th:text="${genre.name}" th:value="${genre.id}"></option>
+        </select>
+    </div>
+
+    <div class="row">
+        <label for="description-input">Описание:</label>
+        <input id="description-input" name="description" th:value="${book.description}" type="text" value="Good book"/>
+    </div>
+
+    <div class="row">
+        <button type="submit">Сохранить</button>
+    </div>
+</form>
+
+</body>
+</html>
