@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="header">
+    <meta charset="UTF-8"/>
+    <link href="css.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<div th:fragment="menu">
+    <a href="authors.html" th:href="@{/authors}">Авторы</a>
+    <a href="books.html" th:href="@{/books}">Книги</a>
+</div>
+
+</body>
+</html>

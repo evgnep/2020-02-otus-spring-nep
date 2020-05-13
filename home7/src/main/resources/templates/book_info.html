@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Информация о книге</title>
+    <!--/*/ <th:block th:include="fragments :: header">
+   </th:block> /*/-->
+</head>
+<body>
+
+<div th:insert="fragments :: menu"/>
+
+<h1 th:text="${book.name}">Some book</h1>
+
+<table class="mytable">
+    <tr>
+        <th>Автор</th>
+        <td th:text="${book.author.name}">Иванов</td>
+    </tr>
+    <tr>
+        <th>Жанр</th>
+        <td th:text="${book.genre.name}">Детектив</td>
+    </tr>
+    <tr>
+        <th>Описание</th>
+        <td th:text="${book.description}">Бла-бла</td>
+    </tr>
+</table>
+
+<h2>Комментарии</h2>
+
+<table class="mytable" th:if="${book.comments.size()>0}">
+    <tr>
+        <th>Автор</th>
+        <th>Комментарий</th>
+    </tr>
+    <tr th:each="comment : ${book.comments}">
+        <td th:text="${comment.author}">Васечкин</td>
+        <td th:text="${comment.comment}">Круто!</td>
+    </tr>
+</table>
+
+<div class="authors" th:if="${book.comments.size()==0}">
+    Комментариев пока нет
+</div>
+
+<h3>Оставьте комментарий!</h3>
+<form action="edit.html" id="edit-form" th:action="@{/book/add_comment(bookId=${book.id})}" th:method="post">
+    <div class="row">
+        <label for="author-input">Как вас зовут?</label>
+        <input id="author-input" name="author" type="text"/>
+    </div>
+
+    <div class="row">
+        <label for="comment-input">Ваш комментарий:</label>
+        <input id="comment-input" name="comment" type="text"/>
+    </div>
+
+    <div class="row">
+        <button type="submit">Сохранить</button>
+    </div>
+</form>
+
+</body>
+</html>
