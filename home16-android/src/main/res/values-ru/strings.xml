@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="id">ИД</string>
+    <string name="name">Имя</string>
+    <string name="title_activity_author">Авторы</string>
+    <string name="title_item_detail">Автор</string>
+    <string name="title">Название</string>
+    <string name="delete">Удалить</string>
+</resources>

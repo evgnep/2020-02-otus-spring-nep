@@ -3,4 +3,4 @@ rootProject.name = 'otus-spring-nep'
 include ('home1')
 include ('home7')
 include ('home16-dto')
-
+include ('home16-android')
