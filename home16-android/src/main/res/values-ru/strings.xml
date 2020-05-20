@@ -11,4 +11,7 @@
     <string name="books">Книги</string>
     <string name="author">Автор</string>
     <string name="book">Книга</string>
+    <string name="genres">Жанры</string>
+    <string name="genre">Жанр</string>
+    <string name="description">Описание</string>
 </resources>

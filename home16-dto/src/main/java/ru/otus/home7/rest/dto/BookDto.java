@@ -7,11 +7,14 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Accessors(chain = true)
-public class AuthorDto {
+public class BookDto {
     private long id;
     private String name;
+    private String description;
+    private AuthorDto author;
+    private GenreDto genre;
 }

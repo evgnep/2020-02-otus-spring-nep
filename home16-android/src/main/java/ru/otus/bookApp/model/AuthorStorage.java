@@ -1,13 +1,11 @@
 package ru.otus.bookApp.model;
 
-import ru.otus.bookApp.rest.NetworkService;
+import ru.otus.bookApp.rest.Api;
 import ru.otus.home7.rest.dto.AuthorDto;
 
 public class AuthorStorage extends Storage<AuthorDto> {
-    public static final AuthorStorage INSTANCE = new AuthorStorage();
-
-    private AuthorStorage() {
-        super(NetworkService.INSTANCE.getAuthorApi());
+    public AuthorStorage(Api<AuthorDto> api) {
+        super(api);
     }
 
     @Override

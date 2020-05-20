@@ -2,9 +2,7 @@ package ru.otus.bookApp.rest;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.http.DELETE;
-import retrofit2.http.GET;
-import retrofit2.http.POST;
+import retrofit2.http.*;
 import ru.otus.home7.rest.dto.AuthorDto;
 
 import java.util.List;
@@ -14,13 +12,13 @@ interface AuthorApi {
     Call<List<AuthorDto>> getAll();
 
     @GET("/rest/author/{id}")
-    Call<AuthorDto> get(long id);
+    Call<AuthorDto> get(@Path("id") long id);
 
     @POST("/rest/author")
-    Call<AuthorDto> save(AuthorDto elem);
+    Call<AuthorDto> save(@Body AuthorDto elem);
 
     @DELETE("/rest/author/{id}")
-    Call<ResponseBody> delete(long id);
+    Call<ResponseBody> delete(@Path("id") long id);
 }
 
 class AuthorApiImpl implements Api<AuthorDto> {

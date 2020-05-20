@@ -12,3 +12,6 @@ gradlew.bat
 /gradle/wrapper/
 /spring-shell.log
 /home7/spring-shell.log
+/build/intermediates/lint-cache/
+/local.properties
+/home1/src/test/resources/.idea/

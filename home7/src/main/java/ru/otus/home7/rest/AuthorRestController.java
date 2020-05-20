@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping(path = "/rest/author")
 public class AuthorRestController {
     private final AuthorRepository repository;
 
@@ -16,22 +17,22 @@ public class AuthorRestController {
         this.repository = repository;
     }
 
-    @GetMapping("/rest/author")
+    @GetMapping
     public List<AuthorDto> getAll() {
         return repository.findAll().stream().map(AuthorConverters::toDto).collect(Collectors.toList());
     }
 
-    @RequestMapping(value = "/rest/author", method = {RequestMethod.POST, RequestMethod.PUT})
-    public AuthorDto save(AuthorDto author) {
-        return AuthorConverters.toDto(repository.save(AuthorConverters.fromDto(author)));
-    }
-
-    @GetMapping("/rest/author/{id}")
+    @GetMapping("/{id}")
     public AuthorDto get(@PathVariable long id) {
         return AuthorConverters.toDto(repository.findById(id).orElseThrow());
     }
 
-    @DeleteMapping("/rest/author/{id}")
+    @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT})
+    public AuthorDto save(@RequestBody AuthorDto author) {
+        return AuthorConverters.toDto(repository.save(AuthorConverters.fromDto(author)));
+    }
+
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable long id) {
         repository.deleteById(id);
     }
