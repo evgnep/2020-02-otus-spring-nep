@@ -5,7 +5,6 @@ import ru.otus.home7.repository.BookRepository;
 import ru.otus.home7.rest.dto.BookConverters;
 import ru.otus.home7.rest.dto.BookDto;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,7 +28,6 @@ public class BookRestController {
     }
 
     @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT})
-    @Transactional
     public BookDto save(@RequestBody BookDto book) {
         var id = repository.save(BookConverters.fromDto(book)).getId();
         return BookConverters.toDto(repository.findById(id).orElseThrow());

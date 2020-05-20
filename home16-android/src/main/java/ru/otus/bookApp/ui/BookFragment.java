@@ -13,8 +13,11 @@ import ru.otus.bookApp.model.BookStorage;
 import ru.otus.bookApp.ui.helper.BaseDialogFragment;
 import ru.otus.home7.rest.dto.AuthorDto;
 import ru.otus.home7.rest.dto.BookDto;
+import ru.otus.home7.rest.dto.GenreDto;
 
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
 
 public class BookFragment extends BaseDialogFragment<BookDto> {
 
@@ -35,6 +38,8 @@ public class BookFragment extends BaseDialogFragment<BookDto> {
     protected BookDto viewToElem() {
         book.setName(eName.getText().toString());
         book.setDescription(eDescription.getText().toString());
+        book.getAuthor().setId(sAuthor.getSelectedItemId());
+        book.getGenre().setId(sGenre.getSelectedItemId());
         return book;
     }
 
@@ -47,47 +52,64 @@ public class BookFragment extends BaseDialogFragment<BookDto> {
         eName = view.findViewById(R.id.name);
         eDescription = view.findViewById(R.id.description);
         sAuthor = view.findViewById(R.id.author);
+        sGenre = view.findViewById(R.id.genre);
 
         int pos = getArguments().getInt("pos");
 
         BookStorage storage = Main.get(this).getBookStorage();
-        book = pos == -1 ? new BookDto() : storage.get(pos);
+        book = pos == -1 ? new BookDto().setAuthor(new AuthorDto()).setGenre(new GenreDto()) : storage.get(pos);
 
         vId.setText(pos == -1 ? "-" : Long.toString(book.getId()));
         eName.setText(book.getName());
         eDescription.setText(book.getDescription());
 
-
-        SpinnerAdapter adapter = new ArrayAdapter<AuthorWrapper>(container.getContext(), android.R.layout.simple_spinner_dropdown_item,
-                Main.get(this).getAuthorStorage().getItems().stream().map(AuthorWrapper::new).collect(Collectors.toList())) {
-            @Override
-            public long getItemId(int position) {
-                return getItem(position).getId();
-            }
-        };
-        sAuthor.setAdapter(adapter);
-
-        sAuthor.setSele
+        populateSpinner(sAuthor, Main.get(this).getAuthorStorage().getItems(), IdName::new, book.getAuthor().getId());
+        populateSpinner(sGenre, Main.get(this).getGenreStorage().getItems(), IdName::new, book.getGenre().getId());
 
         setupButtonsAndStorage(view, storage, pos);
 
         return view;
     }
 
-    private static class AuthorWrapper {
-        final AuthorDto author;
+    private <T> void populateSpinner(Spinner spinner, List<T> items, Function<T, IdName> converter, long current) {
+        List<IdName> idNames = new ArrayList<>();
 
-        AuthorWrapper(AuthorDto author) {
-            this.author = author;
+        int selected = -1;
+        for (T elem : items) {
+            IdName idName = converter.apply(elem);
+            if (idName.id == current)
+                selected = idNames.size();
+            idNames.add(idName);
+        }
+
+        SpinnerAdapter adapter = new ArrayAdapter<IdName>(getContext(), android.R.layout.simple_spinner_dropdown_item, idNames) {
+            @Override
+            public long getItemId(int position) {
+                return getItem(position).id;
+            }
+        };
+        spinner.setAdapter(adapter);
+        if (selected != -1)
+            spinner.setSelection(selected);
+    }
+
+    private static class IdName {
+        final long id;
+        final String name;
+
+        IdName(AuthorDto author) {
+            id = author.getId();
+            name = author.getName();
+        }
+
+        IdName(GenreDto genre) {
+            id = genre.getId();
+            name = genre.getName();
         }
 
         @Override
         public String toString() {
-            return author.getName();
-        }
-
-        public long getId() {
-            return author.getId();
+            return name;
         }
     }
 }

@@ -65,8 +65,8 @@ public abstract class Storage<T> {
 
         checkNoOp();
 
-        api.save(elem).enqueue(new CallbackAdapter<>(x -> {
-            items.getValue().set(i, elem);
+        api.save(elem).enqueue(new CallbackAdapter<>(returned -> {
+            items.getValue().set(i, returned);
             items.setValue(items.getValue());
         }));
     }
@@ -82,8 +82,8 @@ public abstract class Storage<T> {
 
     public void add(T elem) {
         checkNoOp();
-        api.save(elem).enqueue(new CallbackAdapter<>(x -> {
-            items.getValue().add(x);
+        api.save(elem).enqueue(new CallbackAdapter<>(returned -> {
+            items.getValue().add(returned);
             items.setValue(items.getValue());
         }));
     }
