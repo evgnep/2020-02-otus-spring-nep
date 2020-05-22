@@ -11,6 +11,7 @@ import androidx.fragment.app.ListFragment;
 import com.google.android.material.snackbar.Snackbar;
 import ru.otus.bookApp.model.Storage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,7 +52,8 @@ public abstract class BaseListFragment<T> extends ListFragment {
         private final LayoutInflater inflater;
 
         public BaseListAdapter(List<T> list, Context context) {
-            this.list = list;
+
+            this.list = list == null ? new ArrayList<>() : list;
             this.inflater = LayoutInflater.from(context);
         }
 

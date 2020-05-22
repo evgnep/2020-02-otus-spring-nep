@@ -13,22 +13,6 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
-        <!--        <activity-->
-        <!--                android:name="ru.otus.bookApp.ui.AuthorListFragment"-->
-        <!--                android:label="@string/authors"-->
-        <!--                android:theme="@style/AppTheme.NoActionBar">-->
-        <!--            <intent-filter>-->
-        <!--                <action android:name="android.intent.action.MAIN"/>-->
-
-        <!--                <category android:name="android.intent.category.LAUNCHER"/>-->
-        <!--            </intent-filter>-->
-        <!--        </activity>-->
-        <!--        <activity-->
-        <!--                android:name="ru.otus.bookApp.ui.AuthorActivity"-->
-        <!--                android:label="@string/author"-->
-        <!--                android:theme="@style/AppTheme.NoActionBar"-->
-        <!--                android:excludeFromRecents="true">-->
-        <!--        </activity>-->
         <activity android:name=".ui.MainActivity"
         >
             <intent-filter>
