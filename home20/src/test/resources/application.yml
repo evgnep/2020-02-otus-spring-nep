@@ -1,0 +1,10 @@
+spring:
+  shell:
+    interactive:
+      enabled: false
+
+logging:
+  level:
+    ROOT: DEBUG
+
+hasInitialData: false
