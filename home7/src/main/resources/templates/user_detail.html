@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Изменение пользователя</title>
+    <!--/*/ <th:block th:include="fragments :: header">
+        </th:block> /*/-->
+</head>
+<script>
+    function checkPassword(password1, password2) {
+        if (password1 !== password2) {
+            alert('Wrong...!')
+            return false;
+        } else
+            return true;
+    }
+</script>
+<body>
+
+<div th:insert="fragments :: menu"/>
+
+<form action="edit.html" id="edit-form" name="form" th:action="@{/user/save}" th:method="post">
+    <h1>Автор:</h1>
+
+    <div class="row">
+        <label for="id-input">ID:</label>
+        <input id="id-input" name="id" readonly="readonly" th:value="${user.id}" type="text" value="1"/>
+    </div>
+
+    <div class="row">
+        <label for="holder-input">Имя:</label>
+        <input id="holder-input" name="login" th:value="${user.login}" type="text" value="John Doe"/>
+    </div>
+
+    <div class="row">
+        <label for="password-input">Пароль:</label>
+        <input id="password-input" name="password" type="password"/>
+    </div>
+
+    <div class="row">
+        <label for="password-input2">Повторите пароль:</label>
+        <input id="password-input2" name="password2" type="password"/>
+    </div>
+
+    <div class="row">
+        <button onclick="return checkPassword(document.form.password.value, document.form.password2.value)"
+                type="submit">Сохранить
+        </button>
+    </div>
+</form>
+
+</body>
+</html>

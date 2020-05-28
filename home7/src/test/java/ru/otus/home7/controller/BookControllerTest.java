@@ -3,10 +3,8 @@ package ru.otus.home7.controller;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.web.servlet.MockMvc;
 import ru.otus.home7.domain.Author;
 import ru.otus.home7.domain.Book;
 import ru.otus.home7.domain.BookComment;
@@ -28,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(BookController.class)
 @DisplayName("Web-контроллер книг позволяет")
-class BookControllerTest {
+class BookControllerTest extends TestUtils {
     private final Author author1 = Author.builder().id(11).name("Ivanov").build();
     private final Author author2 = Author.builder().id(12).name("Petrov").build();
     private final List<Author> authors = List.of(author1, author2);
@@ -36,8 +34,6 @@ class BookControllerTest {
     private final Genre genre2 = Genre.builder().id(22).name("g2").build();
     private final List<Genre> genres = List.of(genre1, genre2);
     private final Book book = Book.builder().id(1).name("b1").author(author1).genre(genre1).description("d1").build();
-    @Autowired
-    private MockMvc mvc;
     @MockBean
     private AuthorRepository authorRepository;
     @MockBean

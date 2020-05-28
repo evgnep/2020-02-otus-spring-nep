@@ -4,12 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
+import ru.otus.home7.controller.TestUtils;
 import ru.otus.home7.domain.Author;
 import ru.otus.home7.repository.AuthorRepository;
 import ru.otus.home7.rest.dto.AuthorConverters;
@@ -26,11 +25,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(AuthorRestController.class)
 @DisplayName("Rest-контроллер авторов позволяет")
-class AuthorRestControllerTest {
+class AuthorRestControllerTest extends TestUtils {
 
     private final Author author = Author.builder().id(42).name("Ivanov").build();
-    @Autowired
-    private MockMvc mvc;
     @MockBean
     private AuthorRepository repository;
 
