@@ -13,20 +13,20 @@ import ru.otus.home13.domain.Genre;
 public class InitialData {
 
     public InitialData(MongoTemplate t) {
-        var a1 = t.save(Author.builder().name("Ivanov").build());
-        var a2 = t.save(Author.builder().name("Petrov").build());
+        var author1 = t.save(Author.builder().name("Иванов").build());
+        var author2 = t.save(Author.builder().name("Петров").build());
 
-        var g1 = t.save(Genre.builder().name("Детектив").build());
-        var g2 = t.save(Genre.builder().name("Фантастика").build());
+        var genre1 = t.save(Genre.builder().name("Детектив").build());
+        var genre2 = t.save(Genre.builder().name("Фантастика").build());
 
-        var b1 = Book.builder().name("Убийство в саду").description("Интересный детектив").genre(g1).build();
-        b1.getAuthors().add(a1);
-        b1.getAuthors().add(a2);
-        b1.getComments().add(new BookComment("Сидоров", "Очень интересно"));
-        t.save(b1);
+        var book1 = Book.builder().name("Убийство в саду").description("Интересный детектив").genre(genre1).build();
+        book1.getAuthors().add(author1);
+        book1.getAuthors().add(author2);
+        book1.getComments().add(new BookComment("Сидоров", "Очень интересно"));
+        t.save(book1);
 
-        var b2 = Book.builder().name("Оно").genre(g2).build();
-        b2.getAuthors().add(a2);
-        t.save(b2);
+        var book2 = Book.builder().name("Оно").genre(genre2).build();
+        book2.getAuthors().add(author2);
+        t.save(book2);
     }
 }

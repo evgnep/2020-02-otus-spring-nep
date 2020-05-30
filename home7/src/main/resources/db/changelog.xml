@@ -64,5 +64,18 @@
         <sqlFile path="data.sql" relativeToChangelogFile="true"/>
     </changeSet>
 
+    <changeSet author="evgnep" id="003-user">
+        <createTable tableName="user">
+            <column name="id" type="long">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="login" type="varchar(50)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="password" type="varchar(200)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
 
 </databaseChangeLog>

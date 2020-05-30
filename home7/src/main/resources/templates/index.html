@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Библиотека</title>
+</head>
+<body>
+<p>Привет, <span th:text="${#authentication.name}">Joe</span></p>
+<ul>
+    <li><a href="/authors">Авторы</a></li>
+    <li><a href="/books">Книги</a></li>
+    <li><a href="/users">Пользователи</a></li>
+    <li><a href="/logout">Выход</a></li>
+</ul>
+
+</body>
+</html>
