@@ -2,11 +2,11 @@ package ru.otus.home28.order;
 
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.event.TransactionalEventListener;
 import ru.otus.home28.domain.Order;
-import ru.otus.home28.domain.OrderHistory;
 import ru.otus.home28.domain.OrderState;
 import ru.otus.home28.repository.OrderWriteRepository;
 
@@ -16,6 +16,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class OrderServiceImpl implements OrderService {
     private final OrderWriteRepository orderRepository;
     private final ApplicationEventPublisher publisher;
@@ -32,8 +33,6 @@ public class OrderServiceImpl implements OrderService {
             error = "plannedDate";
         else if (o.getRobot() == 0)
             error = "robot";
-        else if (o.getUnfulfilled() != null)
-            error = "unfulfilled";
         else
             return;
 
@@ -41,9 +40,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public UUID saveOrder(Order o) {
-        var history = o.getHistory().toArray(OrderHistory[]::new);
-        var prevState = history.length > 1 ? history[history.length - 1].getState() : OrderState.NOT_EXISTS;
+    public UUID saveOrder(Order o, OrderState prevState) {
+        log.info("save order: {}", o);
+        log.info("{} -> {}", prevState, o.getState());
+
         o = orderRepository.save(o);
         if (o.getState() != prevState)
             publisher.publishEvent(new StateChangeEvent(o, OrderState.NOT_EXISTS));
@@ -57,6 +57,7 @@ public class OrderServiceImpl implements OrderService {
 
     @TransactionalEventListener
     public void onStateChange(StateChangeEvent event) {
+        log.info("Order state changed (transaction commit): {} -> {}", event.previous, event.order.getState());
         entryPoint.stateChanged(event.order, event.previous);
     }
 

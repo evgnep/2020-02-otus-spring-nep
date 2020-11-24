@@ -6,8 +6,8 @@ import ru.otus.home28.domain.Order;
 import java.util.UUID;
 
 /**
- * Внимание! Это репозиторий исключительно для нужд {@link ManagerImpl}. Все внешние пользователи пользуются
- * для изменения заказа методами {@link Manager}, а для чтения - {@link ru.topazelectro.washmanager.repository.OrderRepository}
+ * Внимание! Это репозиторий исключительно для внутренних нужд пакета order. Все внешние пользователи пользуются
+ * для изменения заказа методами {@link ru.otus.home28.order.OrderService}, а для чтения - {@link OrderRepository}
  */
 public interface OrderWriteRepository extends CrudRepository<Order, UUID>, OrderRepository {
 }

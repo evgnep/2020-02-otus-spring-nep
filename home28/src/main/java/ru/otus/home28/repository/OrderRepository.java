@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import ru.otus.home28.domain.Order;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,6 +16,6 @@ import java.util.UUID;
  */
 @Primary
 public interface OrderRepository extends ReadOnlyRepository<Order, UUID>, JpaSpecificationExecutor<Order> {
-    @Query("SELECT o FROM Order o WHERE o.state = ru.otus.home28.domain.OrderState.READY and o.robot = :robot")
-    List<Order> getReady(int robot);
+    @Query("SELECT o FROM Order o WHERE o.state = ru.otus.home28.domain.OrderState.READY and o.plannedDate <= :before")
+    List<Order> getReady(LocalDateTime before);
 }

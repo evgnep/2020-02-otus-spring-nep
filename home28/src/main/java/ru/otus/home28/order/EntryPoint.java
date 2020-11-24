@@ -1,6 +1,7 @@
 package ru.otus.home28.order;
 
 import org.springframework.integration.annotation.Gateway;
+import org.springframework.integration.annotation.GatewayHeader;
 import org.springframework.integration.annotation.MessagingGateway;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.handler.annotation.Header;
@@ -21,7 +22,7 @@ interface EntryPoint {
     @Gateway(requestChannel = "createFlow.input")
     UUID create(Order order, @Header(SOURCE) String source);
 
-    @Gateway(requestChannel = "readyFlow.input")
+    @Gateway(requestChannel = "readyFlow.input", headers = @GatewayHeader(name = "replyChannel", value = "nullChannel"))
     void ready(Order order, @Header(SOURCE) String source);
 
     @Gateway(requestChannel = "orderStateChangedChannel")

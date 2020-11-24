@@ -11,7 +11,7 @@ import ru.otus.home28.domain.OrderState;
 
 @Configuration
 @RequiredArgsConstructor
-class OrderCreate {
+class IntegrationConfig {
     private final OrderService orderService;
     private final RobotService robotService;
 
@@ -30,7 +30,7 @@ class OrderCreate {
                     orderService.checkTimeSlot(o, o.getPlannedDate());
                     return o;
                 })
-                .<Order>handle((o, h) -> orderService.saveOrder(o.copy().setState(OrderState.CREATE, EntryPoint.getSource(h))));
+                .<Order>handle((o, h) -> orderService.saveOrder(o.copy().setState(OrderState.CREATE, EntryPoint.getSource(h)), o.getState()));
     }
 
     @Bean
@@ -40,7 +40,7 @@ class OrderCreate {
                     robotService.checkReadyOrder(o);
                     return o;
                 })
-                .<Order>handle((o, h) -> orderService.saveOrder(o.copy().setState(OrderState.READY, EntryPoint.getSource(h))));
+                .<Order>handle((o, h) -> orderService.saveOrder(o.copy().setState(OrderState.READY, EntryPoint.getSource(h)), o.getState()));
     }
 
     @Bean
