@@ -1,4 +1,4 @@
-package ru.otus.home22.util;
+package ru.otus.home28.util;
 
 public class Util {
     @SafeVarargs

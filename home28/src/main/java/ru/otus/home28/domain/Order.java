@@ -1,9 +1,8 @@
-package ru.otus.home22.domain;
+package ru.otus.home28.domain;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.Accessors;
+import ru.otus.home28.util.Util;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -12,13 +11,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.UUID;
 
-import static ru.otus.home22.util.Util.oneOf;
-
 
 @Data
 @Entity
 @Table(name = "userOrder")
 @Accessors(chain = true)
+@Builder(toBuilder = true)
+@AllArgsConstructor
 public class Order {
     @Id
     @GeneratedValue
@@ -53,6 +52,9 @@ public class Order {
     private int robot;
 
     @Column(nullable = false)
+    private String receipt;
+
+    @Column(nullable = false)
     private BigDecimal paidCash = BigDecimal.ZERO;
 
     @Column(nullable = false)
@@ -75,7 +77,7 @@ public class Order {
 
     public Order setState(OrderState state, String note) {
         this.state = state;
-        this.scheduled = !oneOf(state, OrderState.COMPLETED, OrderState.REMOVED, OrderState.CANCELLED);
+        this.scheduled = !Util.oneOf(state, OrderState.COMPLETED, OrderState.CANCELLED);
         addHistory(note);
         return this;
     }
@@ -94,21 +96,7 @@ public class Order {
             paidCard = paidCard.add(card);
     }
 
-    /**
-     * Проверяет требования нового заказа, возвращает первое нарушенное или null, если все ок
-     */
-    public String checkNew() {
-        if (!history.isEmpty())
-            return "history";
-        if (totalPaid().compareTo(BigDecimal.ZERO) != 0)
-            return "paid";
-        if (plannedDate == null)
-            return "plannedDate";
-        if (robot == 0)
-            return "robot";
-        if (unfulfilled != null)
-            return "unfulfilled";
-        return null;
+    public Order copy() {
+        return toBuilder().build();
     }
-
 }

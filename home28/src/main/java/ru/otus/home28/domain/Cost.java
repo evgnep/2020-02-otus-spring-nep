@@ -1,8 +1,8 @@
-package ru.otus.home22.domain;
+package ru.otus.home28.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import ru.otus.home22.util.BigDecimals;
+import ru.otus.home28.util.BigDecimals;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;

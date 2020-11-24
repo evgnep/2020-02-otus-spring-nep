@@ -1,4 +1,4 @@
-package ru.otus.home22.repository;
+package ru.otus.home28.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

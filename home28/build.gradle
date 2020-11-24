@@ -23,7 +23,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-	//implementation 'org.springframework.boot:spring-boot-starter-integration'
+	implementation 'org.springframework.boot:spring-boot-starter-integration'
 
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'

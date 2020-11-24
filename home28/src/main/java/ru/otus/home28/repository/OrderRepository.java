@@ -1,11 +1,10 @@
-package ru.otus.home22.repository;
+package ru.otus.home28.repository;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
-import ru.otus.home22.domain.Order;
+import ru.otus.home28.domain.Order;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,11 +15,6 @@ import java.util.UUID;
  */
 @Primary
 public interface OrderRepository extends ReadOnlyRepository<Order, UUID>, JpaSpecificationExecutor<Order> {
-    /**
-     * scheduled-заказы меньшие заданной даты
-     */
-    @Query("SELECT o FROM Order o WHERE o.scheduled = true AND o.plannedDate <= :to ORDER BY o.plannedDate")
-    List<Order> getPlanned(LocalDateTime to);
-
-
+    @Query("SELECT o FROM Order o WHERE o.state = ru.otus.home28.domain.OrderState.READY and o.robot = :robot")
+    List<Order> getReady(int robot);
 }

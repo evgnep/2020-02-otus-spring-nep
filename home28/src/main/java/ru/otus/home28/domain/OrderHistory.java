@@ -1,4 +1,4 @@
-package ru.otus.home22.domain;
+package ru.otus.home28.domain;
 
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
